@@ -1,6 +1,6 @@
 // Rock Paper Scissors
 
-// UI
+// UI Assigning
 
 const buttonsChoice = document.querySelectorAll('.btn-choice');
 
@@ -26,12 +26,15 @@ const disableButtons = () => {
 const computerPlay = () => {
     let choice = Math.floor(Math.random() * 3);
 
-    if(choice === 1) {
-        return 'rock';
-    } else if (choice === 2) {
-        return 'paper';
-    } else {
-        return 'scissors';
+    switch(choice) {
+        case 0:
+            return 'rock';
+
+        case 1:
+            return 'paper';
+
+        case 2:
+            return 'scissors';
     }
 };
 
@@ -52,7 +55,7 @@ function playRound(playerChoice) {
                 disableButtons();
             };
         } else if(playerChoice === computerChoice) {
-            resultsText.innerHtml = (`It's a draw, you both chose ${playerChoice}.`);
+            resultsText.innerHTML = (`It's a draw, you both chose ${playerChoice}.`);
         } else {
             compPoints.textContent = ++losses;
             resultsText.innerHTML = (`You lost, ${computerChoice} beats ${playerChoice}.`);

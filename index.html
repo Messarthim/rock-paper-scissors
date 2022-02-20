@@ -5,10 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="./script.js" defer></script>
     <title>Rock Paper Scissors</title>
 </head>
 <body>
-    <h1>Rock Paper Scissors</h1>
+    <div id="container">
+        <div id="container-game">
+            <div id="container-display">
+                <h1>Rock Paper Scissors</h1>
+            </div>
+            <div id="container-btn">
+                <button class="btn-choice" id="btn-rock" value="rock">Rock</button>
+                <button class="btn-choice" id="btn-paper" value="paper">Paper</button>
+                <button class="btn-choice" id="btn-scissors" value="scissors">Scissors</button>
+            </div>
+            <div id="scores">
+                <div class="scores-text">
+                    <p>Player's points:</p>
+                    <p id="player-points">0</p>
+                </div>
+                <div class="scores-text">
+                    <p>Comp's points:</p>
+                    <p id="comp-points">0</p>
+                </div>
+            </div>
+            <div id="results">Press a button to start the game!</div>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,10 +1,25 @@
 // Rock Paper Scissors
 
+// UI
+
+const buttonsChoice = document.querySelectorAll('.btn-choice');
+
+let resultsText = document.getElementById('results');
+let compPoints = document.getElementById('comp-points');
+let playerPoints = document.getElementById('player-points');
+
 // Score counters
 
 let wins = 0;
 let losses = 0;
-let draws = 0;
+
+// Disabling buttons at game over
+
+const disableButtons = () => {
+    buttonsChoice.forEach(button => {
+        button.disabled = true;
+    });
+}
 
 //  Generating computer's choice...
 
@@ -22,69 +37,35 @@ const computerPlay = () => {
 
 // Calculating round results
 
-const playRound = (playerChoice, computerChoice) => {
-    if(playerChoice.toLowerCase() === computerChoice) {
-        draws++;
-        console.log("It's a draw!");
-    } else if (playerChoice.toLowerCase() === 'rock' && computerChoice === 'paper') {
-        losses++;
-        console.log("You lose! Paper beats rock.");
-    } else if (playerChoice.toLowerCase() === 'rock' && computerChoice === 'scissors') {
-        wins++;
-        console.log("You win! Rock beats scissors.");
-    } else if (playerChoice.toLowerCase() === 'paper' && computerChoice === 'rock') {
-        wins++;
-        console.log("You win! Paper beats rock.");
-    } else if (playerChoice.toLowerCase() === 'paper' && computerChoice === 'scissors') {
-        losses++;
-        console.log("You lose! Scissors beat paper.");
-    }   else if (playerChoice.toLowerCase() === 'scissors' && computerChoice === 'rock') {
-        losses++;
-        console.log("You lose! Rock beats scissors.");
-    }   else if (playerChoice.toLowerCase() === 'scissors' && computerChoice === 'rock') {
-        wins++;
-        console.log("You win! Scissors beat paper.");
-    } else {
-        invalidChoice++;
-        console.log("Uh oh! Something went wrong.");
-    }
+function playRound(playerChoice) {
+
+    let computerChoice = computerPlay();
+
+    if((playerChoice === 'rock' && computerChoice === 'scissors') ||
+        (playerChoice === 'scissors' && computerChoice === 'paper') ||
+        (playerChoice === 'paper' && computerChoice === 'rock')) {
+            playerPoints.textContent = ++wins;
+            resultsText.innerHTML = (`You win, ${playerChoice} beats ${computerChoice}.`);
+
+            if(wins === 5) {
+                resultsText.innerHTML = ('You won the game!');
+                disableButtons();
+            };
+        } else if(playerChoice === computerChoice) {
+            resultsText.innerHtml = (`It's a draw, you both chose ${playerChoice}.`);
+        } else {
+            compPoints.textContent = ++losses;
+            resultsText.innerHTML = (`You lost, ${computerChoice} beats ${playerChoice}.`);
+
+            if(losses === 5) {
+                resultsText.innerHTML = ('You lost, try again.');
+                disableButtons();
+            };
+        }
 };
 
-let playerChoice;
-let computerChoice = computerPlay();
-
-// A counter for cases when the player inputs an invalid value
-
-let invalidChoice = 0;
-
-// Running the game up to 5 rounds
-
-for (let i = 0; i < 5; i++) {
-    playerChoice = prompt('Choose your weapon!', 'rock');
-    computerChoice = computerPlay();
-
-    console.log(`your weapon: ${playerChoice}`);
-    console.log(`computer's weapon: ${computerChoice}`);
-
-    playRound(playerChoice, computerChoice);
-
-    console.log(`Wins: ${wins}, Losses: ${losses}, Ties: ${draws}`);
-
-    if(invalidChoice > 0) {
-        i--;
-        invalidChoice--;
-    };
-};
-
-// Calculating and showing game results
-
-if(wins > losses) {
-    console.log('Congratulations! You won!')
-} else if (wins < losses) {
-    console.log('You lost! Better luck next time.');
-} else {
-    console.log('The heck?! You tied!');
-};
-
-
-
+buttonsChoice.forEach(button => {
+    button.addEventListener('click', function(){
+        playRound(button.value);
+    });
+});
